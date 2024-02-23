@@ -78,7 +78,7 @@ public class PanelNBack extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDiferenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDiferenteActionPerformed
-                
+              
     }//GEN-LAST:event_btnDiferenteActionPerformed
 
     private void btnIgualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIgualActionPerformed

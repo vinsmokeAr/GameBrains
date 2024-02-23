@@ -19,33 +19,45 @@ public class HiloBack extends Thread {
 
     private List<Integer> listanum;
     private JLabel lbNum;
+    private int numActual;
+    
 
     public HiloBack(JLabel lbNum) {
         this.lbNum = lbNum;
         listanum = new ArrayList<>();
     }
 
+    public int getNumActual() {
+        return numActual;
+    }
+    
+
     public void setLbNum(JLabel lbNum) {
         this.lbNum = lbNum;
     }
 
+    public int getNBack (int n){
+        
+       return listanum.get(listanum.size()-n);
+    }
+    
     @Override
     public void run() {
-        int numTemp=0;
+        
         
         while (true) {
             try {
-                numTemp = new Random().nextInt(0, 9);
-                listanum.add(numTemp);
+                numActual = new Random().nextInt(0, 9);
+                listanum.add(numActual);
                 lbNum.setText("");
                 sleep(1000);
-                lbNum.setText(String.valueOf(numTemp));
-                sleep(2000);
+                lbNum.setText(String.valueOf(numActual));
+                sleep(5000);
             } catch (InterruptedException ex) {
 
             }
         }
-
+        
     }
 
 }
