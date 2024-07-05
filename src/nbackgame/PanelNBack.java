@@ -9,23 +9,34 @@ package nbackgame;
  * @author Arleth
  */
 public class PanelNBack extends javax.swing.JPanel {
+
     private int n;
     private int puntos;
     private HiloBack hilo;
+
     /**
      * Creates new form PanelNBack
      */
     public PanelNBack() {
-        n=2;
-        puntos=5;
+        puntos = 5;
         initComponents();
-        hilo = new HiloBack(lbNumeros);
+        hilo = new HiloBack(lbNumeros);       
+    }
+
+    public void start(int nBack) {
+        n = nBack;
+        lblIndicacion.setText("Memoriza los "+nBack+" números anteriores.");
+        
         hilo.start();
         actualizarPuntos();
     }
     
-
-    
+    public void stop(){
+        hilo.stop();
+    }
+    public boolean getStatus(){
+        return hilo.isAlive();
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -36,10 +47,12 @@ public class PanelNBack extends javax.swing.JPanel {
         btnIgual = new javax.swing.JButton();
         lblPuntos = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        lblIndicacion = new javax.swing.JLabel();
 
         jPasswordField1.setText("jPasswordField1");
 
         lbNumeros.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
+        lbNumeros.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbNumeros.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnDiferente.setText("Diferente");
@@ -56,31 +69,38 @@ public class PanelNBack extends javax.swing.JPanel {
             }
         });
 
-        lblPuntos.setText("jLabel1");
+        lblPuntos.setText("0");
 
         jLabel1.setText("Puntos:");
+
+        lblIndicacion.setText("-");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(btnDiferente)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addComponent(btnIgual)
-                .addGap(82, 82, 82))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblPuntos))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblPuntos))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(77, 77, 77)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbNumeros, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnDiferente, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnIgual)))))
+                        .addGap(0, 83, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(132, 132, 132)
-                        .addComponent(lbNumeros, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(lblIndicacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,37 +109,38 @@ public class PanelNBack extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPuntos)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addComponent(lbNumeros, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblIndicacion)
+                .addGap(19, 19, 19)
+                .addComponent(lbNumeros, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDiferente)
                     .addComponent(btnIgual))
-                .addGap(68, 68, 68))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDiferenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDiferenteActionPerformed
         if (hilo.getNumActual() != hilo.getNBack(n)) {
-            puntos ++;
-        }else{
-            puntos --;
+            puntos++;
+        } else {
+            puntos--;
         }
         actualizarPuntos();
     }//GEN-LAST:event_btnDiferenteActionPerformed
 
     private void btnIgualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIgualActionPerformed
-         if (hilo.getNumActual() == hilo.getNBack(n)) {
-            puntos ++;
-        }else{
-            puntos --;
+        if (hilo.getNumActual() == hilo.getNBack(n)) {
+            puntos++;
+        } else {
+            puntos--;
         }
         actualizarPuntos();
-        
+
     }//GEN-LAST:event_btnIgualActionPerformed
 
-    
-    private void actualizarPuntos(){
+    private void actualizarPuntos() {
         lblPuntos.setText(String.valueOf(puntos));
     }
 
@@ -129,6 +150,7 @@ public class PanelNBack extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JLabel lbNumeros;
+    private javax.swing.JLabel lblIndicacion;
     private javax.swing.JLabel lblPuntos;
     // End of variables declaration//GEN-END:variables
 }

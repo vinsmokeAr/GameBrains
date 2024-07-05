@@ -51,6 +51,7 @@ public class HiloBack extends Thread {
                 lbNum.setText("");
 //                sleep(1000);
                 lbNum.setText(String.valueOf(numActual));
+                System.out.println("---------------------------------");
                 System.out.println("Actual (" + numActual + ")");
                 System.out.println("N anterior (" + getNBack(2) + ")");
                 sleep(5000);
