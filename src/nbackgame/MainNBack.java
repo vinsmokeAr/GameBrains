@@ -9,12 +9,14 @@ package nbackgame;
  * @author UNSIS
  */
 public class MainNBack extends javax.swing.JFrame {
-
+    private MusicManager musicManager;
     /**
      * Creates new form MainNBack
      */
     public MainNBack() {
         initComponents();
+        musicManager = new MusicManager();
+
     }
 
     /**
@@ -78,9 +80,26 @@ public class MainNBack extends javax.swing.JFrame {
         if (panelNBack1.getStatus()) {
             panelNBack1.stop();
         }
-        panelNBack1.start((int) spBack.getValue());
+        int selectedLevel = (int) spBack.getValue();
+        playMusicForLevel(selectedLevel);
+        panelNBack1.start(selectedLevel);
     }//GEN-LAST:event_btnIniciarActionPerformed
+    
+    private void playMusicForLevel(int level) {
+        String musicFile = "src/resources/level" + level + ".wav"; // Cambia según tu estructura de archivos
+        musicManager.loadSound(musicFile);
+        musicManager.playSound();
+        // Ajustar el volumen según el nivel (ejemplo)
+        float volume = -20.0f + (level * 2); // Ajusta el valor según lo necesario
+        musicManager.setVolume(volume);
+    }
 
+    public void onLevelUp(int newLevel) {
+        if (musicManager.isPlaying()) {
+            musicManager.stopSound();
+        }
+        playMusicForLevel(newLevel);
+    }
     /**
      * @param args the command line arguments
      */
