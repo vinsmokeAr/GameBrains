@@ -4,26 +4,41 @@
  */
 package nbackgame;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.*;
 import java.io.File;
 
 public class MusicManager {
     private Clip clip;
 
-    public void loadSound(String soundFileName) {
+    private void loadSound(String soundFileName ) {
+        
         try {
             File soundFile = new File(soundFileName);
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    public void loadSound(String soundFileName, int tipo){
+        loadSound(soundFileName);
+        // si el tipo es para música de fondo
+        if (tipo==1) {
+           clip.addLineListener(new LineListener() {
+                @Override
+                public void update(LineEvent event) {
+                    if (event.getType() == LineEvent.Type.STOP) {
+                        clip.setFramePosition(0); // Reiniciar al principio
+                        clip.start(); // Reproducir nuevamente
+                    }
+                }
+            });
+        } 
+    }
+    
     public void playSound() {
         if (clip != null) {
             clip.start();

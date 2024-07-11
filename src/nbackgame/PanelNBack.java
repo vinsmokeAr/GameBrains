@@ -20,23 +20,25 @@ public class PanelNBack extends javax.swing.JPanel {
     public PanelNBack() {
         puntos = 5;
         initComponents();
-        hilo = new HiloBack(lbNumeros);       
+        hilo = new HiloBack(lbNumeros);
     }
 
     public void start(int nBack) {
         n = nBack;
-        lblIndicacion.setText("Memoriza los "+nBack+" números anteriores.");
-        
+        lblIndicacion.setText("Memoriza los " + nBack + " números anteriores.");
+
         hilo.start();
         actualizarPuntos();
     }
-    
-    public void stop(){
+
+    public void stop() {
         hilo.stop();
     }
-    public boolean getStatus(){
+
+    public boolean getStatus() {
         return hilo.isAlive();
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -48,6 +50,7 @@ public class PanelNBack extends javax.swing.JPanel {
         lblPuntos = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         lblIndicacion = new javax.swing.JLabel();
+        lblAviso = new javax.swing.JLabel();
 
         jPasswordField1.setText("jPasswordField1");
 
@@ -82,25 +85,25 @@ public class PanelNBack extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblPuntos))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(77, 77, 77)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbNumeros, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnDiferente, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnIgual)))))
-                        .addGap(0, 83, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblPuntos))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnDiferente, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnIgual))
+                            .addComponent(lblAviso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addComponent(lbNumeros, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
                         .addComponent(lblIndicacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addContainerGap(89, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,32 +112,45 @@ public class PanelNBack extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPuntos)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
                 .addComponent(lblIndicacion)
-                .addGap(19, 19, 19)
-                .addComponent(lbNumeros, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbNumeros, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(lblAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDiferente)
                     .addComponent(btnIgual))
-                .addContainerGap())
+                .addContainerGap(12, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDiferenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDiferenteActionPerformed
-        if (hilo.getNumActual() != hilo.getNBack(n)) {
+        boolean respuestaCorrecta = hilo.getNumActual() != hilo.getNBack(n);
+        if (respuestaCorrecta) {
             puntos++;
+            lblAviso.setText("Correcto");
+            reproducirSonido("music/correcto.wav");
         } else {
             puntos--;
+            lblAviso.setText("Incorrecto");
+            reproducirSonido("music/incorrecto.wav");
         }
         actualizarPuntos();
+
     }//GEN-LAST:event_btnDiferenteActionPerformed
 
     private void btnIgualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIgualActionPerformed
-        if (hilo.getNumActual() == hilo.getNBack(n)) {
+        boolean respuestaCorrecta = hilo.getNumActual() == hilo.getNBack(n);
+        if (respuestaCorrecta) {
             puntos++;
+            lblAviso.setText("Correcto");
+            reproducirSonido("music/correcto.wav");
         } else {
             puntos--;
+            lblAviso.setText("Incorrecto");
+            reproducirSonido("music/incorrecto.wav");
         }
         actualizarPuntos();
 
@@ -144,12 +160,20 @@ public class PanelNBack extends javax.swing.JPanel {
         lblPuntos.setText(String.valueOf(puntos));
     }
 
+    private void reproducirSonido(String soundFile) {
+        MusicManager soundManager = new MusicManager();
+        soundManager.loadSound(soundFile,0);
+        soundManager.playSound();
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDiferente;
     private javax.swing.JButton btnIgual;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JLabel lbNumeros;
+    private javax.swing.JLabel lblAviso;
     private javax.swing.JLabel lblIndicacion;
     private javax.swing.JLabel lblPuntos;
     // End of variables declaration//GEN-END:variables
